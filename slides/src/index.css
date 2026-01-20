@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+:root {
+  /* Background layers */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #141414;
+  --bg-tertiary: #1f1f1f;
+
+  /* Text layers */
+  --text-primary: #f5f5f5;
+  --text-secondary: #a3a3a3;
+  --text-muted: #666666;
+
+  /* Accent colors */
+  --accent-primary: #3b82f6;
+  --accent-success: #22c55e;
+  --accent-warning: #f59e0b;
+  --accent-danger: #ef4444;
+
+  /* Font sizes for presentation */
+  --font-title: 96px;
+  --font-section: 64px;
+  --font-heading: 48px;
+  --font-body: 36px;
+  --font-small: 24px;
+
+  /* Font settings */
+  font-family: "Inter", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  line-height: 1.4;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body.no-scroll {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+/* Code font */
+code, pre, .font-mono {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* Selection style */
+::selection {
+  background-color: var(--accent-primary);
+  color: white;
+}
+
+/* Scrollbar style */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Slide transition animations */
+.slide-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.slide-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}

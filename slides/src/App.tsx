@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Presentation } from './components/Presentation'
+import { ScriptViewer } from './pages/ScriptViewer'
 import { presentations } from './presentations'
+
+type ViewMode = 'list' | 'presentation' | 'script'
 
 // Part 描述信息
 const partDescriptions: Record<string, string> = {
@@ -18,15 +21,38 @@ const partDescriptions: Record<string, string> = {
   part11: '工具、资料与进阶学习路线',
 }
 
+// 导师信息
+const partInstructors: Record<string, string[]> = {
+  part00: ['Emily'],
+  part01: ['Emily'],
+  part02: ['Antony'],
+  part03: ['Antony'],
+  part04: ['Antony'],
+  part05: ['Antony'],
+  part06: ['Antony'],
+  part07: ['Antony'],
+  part08: ['Maria'],
+  part09: ['Emily', 'Antony'],
+  part10: ['Maria'],
+  part11: ['Antony'],
+}
+
 
 function App() {
   const [selectedPart, setSelectedPart] = useState<string | null>(null)
+  const [viewMode, setViewMode] = useState<ViewMode>('list')
   const [hoveredPart, setHoveredPart] = useState<string | null>(null)
   const [hoveredBack, setHoveredBack] = useState(false)
+  const [hoveredButton, setHoveredButton] = useState<string | null>(null)
+
+  // 通过 URL 参数控制是否显示讲稿按钮，默认不显示
+  // 使用方式：在 URL 后添加 ?script=true 或 ?script=1
+  const showScriptButton = new URLSearchParams(window.location.search).get('script') === 'true' ||
+    new URLSearchParams(window.location.search).get('script') === '1'
 
   // 控制 body 的滚动
   useEffect(() => {
-    if (selectedPart) {
+    if (viewMode === 'presentation') {
       document.body.classList.add('no-scroll')
     } else {
       document.body.classList.remove('no-scroll')
@@ -34,14 +60,34 @@ function App() {
     return () => {
       document.body.classList.remove('no-scroll')
     }
-  }, [selectedPart])
+  }, [viewMode])
+
+  const handleBack = () => {
+    setSelectedPart(null)
+    setViewMode('list')
+  }
+
+  const handleStartPresentation = (partKey: string) => {
+    setSelectedPart(partKey)
+    setViewMode('presentation')
+  }
+
+  const handleViewScript = (partKey: string) => {
+    setSelectedPart(partKey)
+    setViewMode('script')
+  }
+
+  // If viewing script, show ScriptViewer
+  if (viewMode === 'script' && selectedPart) {
+    return <ScriptViewer partId={selectedPart} onBack={handleBack} />
+  }
 
   // If a presentation is selected, show it
-  if (selectedPart && presentations[selectedPart]) {
+  if (viewMode === 'presentation' && selectedPart && presentations[selectedPart]) {
     return (
       <div style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', overflow: 'hidden' }}>
         <button
-          onClick={() => setSelectedPart(null)}
+          onClick={handleBack}
           onMouseEnter={() => setHoveredBack(true)}
           onMouseLeave={() => setHoveredBack(false)}
           style={{
@@ -161,9 +207,8 @@ function App() {
           {Object.entries(presentations).map(([key, presentation]) => {
             const isHovered = hoveredPart === key
             return (
-              <button
+              <div
                 key={key}
-                onClick={() => setSelectedPart(key)}
                 onMouseEnter={() => setHoveredPart(key)}
                 onMouseLeave={() => setHoveredPart(null)}
                 style={{
@@ -173,7 +218,6 @@ function App() {
                   backgroundColor: 'var(--bg-secondary)',
                   borderRadius: '16px',
                   border: isHovered ? '1px solid var(--text-muted)' : '1px solid var(--bg-tertiary)',
-                  cursor: 'pointer',
                   textAlign: 'left',
                   transition: 'all 0.3s ease',
                   transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
@@ -197,15 +241,26 @@ function App() {
                   }}>
                     {String(presentation.partNumber).padStart(2, '0')}
                   </div>
-                  <div style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    padding: '6px 12px',
-                    borderRadius: '20px',
-                    fontSize: '13px',
-                    color: 'var(--text-secondary)',
-                    fontWeight: 500,
-                  }}>
-                    {presentation.slides.length} 页
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+                    <div style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      padding: '6px 12px',
+                      borderRadius: '20px',
+                      fontSize: '13px',
+                      color: 'var(--text-secondary)',
+                      fontWeight: 500,
+                    }}>
+                      {presentation.slides.length} 页
+                    </div>
+                    {partInstructors[key] && (
+                      <div style={{
+                        fontSize: '13px',
+                        color: 'var(--text-muted)',
+                        fontWeight: 500,
+                      }}>
+                        {partInstructors[key].join(' & ')}
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -216,36 +271,81 @@ function App() {
                     fontWeight: 600,
                     color: 'var(--text-primary)',
                     marginBottom: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
                   }}>
                     {presentation.title}
-                    <svg
-                      style={{
-                        width: '16px',
-                        height: '16px',
-                        color: 'var(--text-secondary)',
-                        opacity: isHovered ? 1 : 0,
-                        transform: isHovered ? 'translateX(0)' : 'translateX(-4px)',
-                        transition: 'all 0.2s ease',
-                      }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
                   </h3>
                   <p style={{
                     fontSize: '14px',
                     color: 'var(--text-muted)',
                     lineHeight: 1.5,
+                    marginBottom: '16px',
                   }}>
                     {partDescriptions[key] || `Part ${presentation.partNumber} 内容`}
                   </p>
+
+                  {/* Action buttons */}
+                  <div style={{
+                    display: 'flex',
+                    gap: '12px',
+                  }}>
+                    <button
+                      onClick={() => handleStartPresentation(key)}
+                      onMouseEnter={() => setHoveredButton(`${key}-presentation`)}
+                      onMouseLeave={() => setHoveredButton(null)}
+                      style={{
+                        flex: 1,
+                        padding: '10px 16px',
+                        backgroundColor: hoveredButton === `${key}-presentation` ? '#3b82f6' : 'var(--bg-tertiary)',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        fontWeight: 500,
+                        color: hoveredButton === `${key}-presentation` ? 'white' : 'var(--text-primary)',
+                        border: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                      }}
+                    >
+                      <svg style={{ width: '14px', height: '14px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      开始演示
+                    </button>
+                    {showScriptButton && (
+                      <button
+                        onClick={() => handleViewScript(key)}
+                        onMouseEnter={() => setHoveredButton(`${key}-script`)}
+                        onMouseLeave={() => setHoveredButton(null)}
+                        style={{
+                          flex: 1,
+                          padding: '10px 16px',
+                          backgroundColor: hoveredButton === `${key}-script` ? 'var(--bg-primary)' : 'transparent',
+                          borderRadius: '8px',
+                          fontSize: '14px',
+                          fontWeight: 500,
+                          color: 'var(--text-secondary)',
+                          border: '1px solid var(--bg-tertiary)',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                        }}
+                      >
+                        <svg style={{ width: '14px', height: '14px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        查看讲稿
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </button>
+              </div>
             )
           })}
         </div>

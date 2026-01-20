@@ -32,7 +32,7 @@ const partInstructors: Record<string, string[]> = {
   part06: ['Antony'],
   part07: ['Antony'],
   part08: ['Maria'],
-  part09: ['Emily', 'Antony'],
+  part09: ['Emily'],
   part10: ['Maria'],
   part11: ['Antony'],
 }

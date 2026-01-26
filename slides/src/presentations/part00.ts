@@ -501,7 +501,7 @@ export const part00: Presentation = {
           ],
         },
         {
-          type: 'quote',
+          type: 'highlight',
           value: '公开分享能让你获得社区反馈，甚至结识志同道合的朋友。\n\n公开分享沉淀内容资产会成为你撬动多种机会的杠杆，且让你拥有社交名片助力实现破圈收获同行关注进入业内社交圈子。',
         },
       ],

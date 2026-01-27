@@ -678,17 +678,30 @@ export const part03: Presentation = {
       id: '3.5-02',
       type: 'steps',
       title: '实操步骤一：安装 MetaMask',
-      content: [
+      steps: [
         {
-          type: 'numbered',
-          items: [
-            '访问 metamask.io（只从官方网站下载！）',
-            '点击 Download，选择浏览器扩展',
-            '在 Chrome Web Store 点击「添加到 Chrome」',
-            '创建新钱包，设置密码',
-            '备份助记词（用纸笔抄下来，不要截图！）',
-            '确认助记词，完成创建',
-          ],
+          title: '步骤 1',
+          description: '访问 metamask.io（只从官方网站下载！）',
+        },
+        {
+          title: '步骤 2',
+          description: '点击 Download，选择浏览器扩展',
+        },
+        {
+          title: '步骤 3',
+          description: '在 Chrome Web Store 点击「添加到 Chrome」',
+        },
+        {
+          title: '步骤 4',
+          description: '创建新钱包，设置密码',
+        },
+        {
+          title: '步骤 5',
+          description: '备份助记词（用纸笔抄下来，不要截图！）',
+        },
+        {
+          title: '步骤 6',
+          description: '确认助记词，完成创建',
         },
       ],
     },
@@ -738,17 +751,30 @@ export const part03: Presentation = {
       id: '3.5-05',
       type: 'steps',
       title: '实操步骤四：完成转账',
-      content: [
+      steps: [
         {
-          type: 'numbered',
-          items: [
-            '点击「发送」按钮',
-            '输入接收地址（可以创建第二个账户）',
-            '输入金额（如 0.01 SepoliaETH）',
-            '查看交易详情（含 Gas 费）',
-            '点击「确认」',
-            '等待交易完成（通常 15-30 秒）',
-          ],
+          title: '步骤 1',
+          description: '点击「发送」按钮',
+        },
+        {
+          title: '步骤 2',
+          description: '输入接收地址（可以创建第二个账户）',
+        },
+        {
+          title: '步骤 3',
+          description: '输入金额（如 0.01 SepoliaETH）',
+        },
+        {
+          title: '步骤 4',
+          description: '查看交易详情（含 Gas 费）',
+        },
+        {
+          title: '步骤 5',
+          description: '点击「确认」',
+        },
+        {
+          title: '步骤 6',
+          description: '等待交易完成（通常 15-30 秒）',
         },
       ],
     },

@@ -577,15 +577,22 @@ export const part05: Presentation = {
       id: '5.6-02',
       type: 'steps',
       title: 'DAO 治理流程',
-      content: [
+      steps: [
         {
-          type: 'numbered',
-          items: [
-            '提案 — 成员提出建议',
-            '讨论 — 社区论坛辩论',
-            '投票 — 代币持有者表决',
-            '执行 — 通过后实施提案',
-          ],
+          title: '提案',
+          description: '成员提出建议',
+        },
+        {
+          title: '讨论',
+          description: '社区论坛辩论',
+        },
+        {
+          title: '投票',
+          description: '代币持有者表决',
+        },
+        {
+          title: '执行',
+          description: '通过后实施提案',
         },
       ],
     },

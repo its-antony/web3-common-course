@@ -321,13 +321,14 @@ export const part00: Presentation = {
       id: '0.3-02',
       type: 'steps',
       title: '第一阶段：建立认知（Part 1-2）',
-      content: [
+      steps: [
         {
-          type: 'numbered',
-          items: [
-            'Part 1 世界观：Web3 到底是什么？为什么会有 Web3？',
-            'Part 2 最小技术原理：区块链、Layer2 这些基本概念',
-          ],
+          title: 'Part 1 世界观',
+          description: 'Web3 到底是什么？为什么会有 Web3？',
+        },
+        {
+          title: 'Part 2 最小技术原理',
+          description: '区块链、Layer2 这些基本概念',
         },
       ],
     },
@@ -350,14 +351,18 @@ export const part00: Presentation = {
       id: '0.3-04',
       type: 'steps',
       title: '第三阶段：行业拆解（Part 4-6）',
-      content: [
+      steps: [
         {
-          type: 'numbered',
-          items: [
-            'Part 4 Token 经济：钱从哪里来？为什么有的币涨有的币跌？',
-            'Part 5 商业赛道：DeFi、NFT、GameFi、DePIN 等',
-            'Part 6 风险与避坑：了解镰刀是怎么割韭菜的',
-          ],
+          title: 'Part 4 Token 经济',
+          description: '钱从哪里来？为什么有的币涨有的币跌？',
+        },
+        {
+          title: 'Part 5 商业赛道',
+          description: 'DeFi、NFT、GameFi、DePIN 等',
+        },
+        {
+          title: 'Part 6 风险与避坑',
+          description: '了解镰刀是怎么割韭菜的',
         },
       ],
     },
@@ -365,14 +370,18 @@ export const part00: Presentation = {
       id: '0.3-05',
       type: 'steps',
       title: '第四阶段：进阶与决策（Part 7-11）',
-      content: [
+      steps: [
         {
-          type: 'numbered',
-          items: [
-            'Part 7 判断方法：给你一套"火眼金睛"',
-            'Part 8 & 9 角色与参与：找到你的位置',
-            'Part 10 & 11 路径与资源：课程结束，旅程才刚开始',
-          ],
+          title: 'Part 7 判断方法',
+          description: '给你一套"火眼金睛"',
+        },
+        {
+          title: 'Part 8 & 9 角色与参与',
+          description: '找到你的位置',
+        },
+        {
+          title: 'Part 10 & 11 路径与资源',
+          description: '课程结束，旅程才刚开始',
         },
       ],
     },
